@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Tempo Juntos</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #ffe6e6;
+            color: #d23669;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(210, 54, 105, 0.2);
+        }
+        h1 {
+            color: #d23669;
+        }
+        .counter {
+            font-size: 2em;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff0f5;
+            border-radius: 10px;
+        }
+        .date {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nosso Tempo Juntos</h1>
+        <div class="date">Desde <span id="start-date">01/01/2023</span></div>
+        <div class="counter">
+            <div id="years">0 anos</div>
+            <div id="months">0 meses</div>
+            <div id="days">0 dias</div>
+            <div id="hours">0 horas</div>
+            <div id="minutes">0 minutos</div>
+            <div id="seconds">0 segundos</div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURE AQUI A DATA DE INÍCIO DO NAMORO (ano, mês-1, dia)
+        const startDate = new Date(2024, 08, 8); // Exemplo: 1 de janeiro de 2023
+        
+        document.getElementById('start-date').textContent = formatDate(startDate);
+        
+        function formatDate(date) {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+        
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - startDate;
+            
+            const seconds = Math.floor(diff / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            
+            const years = Math.floor(days / 365);
+            const remainingDays = days % 365;
+            const months = Math.floor(remainingDays / 30);
+            const finalDays = remainingDays % 30;
+            
+            document.getElementById('years').textContent = `${years} ano${years !== 1 ? 's' : ''}`;
+            document.getElementById('months').textContent = `${months} mês${months !== 1 ? 'es' : ''}`;
+            document.getElementById('days').textContent = `${finalDays} dia${finalDays !== 1 ? 's' : ''}`;
+            document.getElementById('hours').textContent = `${hours % 24} hora${hours % 24 !== 1 ? 's' : ''}`;
+            document.getElementById('minutes').textContent = `${minutes % 60} minuto${minutes % 60 !== 1 ? 's' : ''}`;
+            document.getElementById('seconds').textContent = `${seconds % 60} segundo${seconds % 60 !== 1 ? 's' : ''}`;
+        }
+        
+        // Atualiza a cada segundo
+        setInterval(updateCounter, 1000);
+        updateCounter(); // Chama imediatamente para evitar atraso inicial
+    </script>
+</body>
+</html>
